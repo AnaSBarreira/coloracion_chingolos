@@ -8,12 +8,12 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-setwd("/Users/Ana/Desktop/Chingolos/Prueba espectrofotometria")
+setwd("/Users/Ana/Desktop/Coloracion_chingolos")
 ```
 
 **PATRONES DE COLORACION CHINGOLOS**
 
-_1) ESPECTROFOTOMETRIA_
+## _1) ESPECTROFOTOMETRIA_
 
 Con Pablito hicimos una prueba piloto midiendo espectros de reflectancia en tres posiciones de la cabeza. Siguiendo una linea recta en la cabeza yendo de un ojo al otro, medimos reflectancia en tres puntos (medidas 1 a 3) para luego comparar el promedio de estas tres mediciones entre ejemplares (Figura 1).  
 
@@ -27,7 +27,7 @@ library(pavo)
 
 
 
-chingos <- getspec("/Users/Ana/Desktop/Chingolos/Prueba espectrofotometria", ext = "txt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+chingos <- getspec("/Users/Ana/Desktop/Coloracion_chingolos/Spectra", ext = "txt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 
 #visualizar los espectros, como para ver que sean mas o menos lo que esperamos
 plot(chingos)
@@ -40,7 +40,7 @@ chingos_bymeasurement <- aggspec(chingos, by = 5, FUN = mean)
 #eliminar valores negativos (si hay)
 chingos_bymeasurement_sn <-procspec(chingos_bymeasurement, fixneg='zero')
 
-#ahora hacemos subgrupos de espectros en base a los parches, tenemos que tener 4 espectros para cada uno de los 5 parches (74042 y 74051 son nichos "australis-like" y 74010 y 74019 son "elresto-like")
+#ahora hacemos subgrupos de espectros en base a los parches, tenemos que tener 4 espectros para cada uno de los 5 parches (74042 y 74051 son bichos "australis-like" y 74010 y 74019 son "elresto-like")
 
 
 chingos_p1 <- subset(chingos_bymeasurement_sn, "_1_")
@@ -55,7 +55,7 @@ plot(chingos_p3)
 plot(chingos_p4)
 plot(chingos_p5)
 ```
-El parche 5 (collar rufo) muestra que todos los bichos son similares... no separaria por subespecie. El resto muestrab variacion pero habria que ver si los agrupa por subespecie o son diferencias interindividuales...
+El parche 5 (collar rufo) muestra que todos los bichos son similares... no separaria por subespecie. El resto muestra variacion pero habria que ver si los agrupa por subespecie o son diferencias interindividuales...
 
 ```{r}
 explorespec(chingos_p1)
@@ -75,6 +75,10 @@ explorespec(chingos_p4)
 #en la espalda parece que uno de los chingolos "normales" tiene reflectancia mas alta que el resto, pero no parecen agrupados por subespecie.
 ```
 Voy ahora a agrupar por "subespecie" y graficar con media y desvio para ver si en estas dos muestras por grupo se aprecian diferencias significativas, aunque obviamente no es lo mas correcto ni mucho menos. Tengo que renonbrar los espectros para poder agruparlos... Bajar CSV, modificar nombres y volver a cargar.
+
+
+  
+  
 
 ```{r}
 
