@@ -1,0 +1,82 @@
+---
+title: "Chingolos"
+author: "Ana Barreira"
+date: "11/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+setwd("/Users/Ana/Desktop/Chingolos/Prueba espectrofotometria")
+```
+
+**PATRONES DE COLORACION CHINGOLOS**
+
+_1) ESPECTROFOTOMETRIA_
+
+Con Pablito hicimos una prueba piloto midiendo espectros de reflectancia en tres posiciones de la cabeza. Siguiendo una linea recta en la cabeza yendo de un ojo al otro, medimos reflectancia en tres puntos (medidas 1 a 3) para luego comparar el promedio de estas tres mediciones entre ejemplares (Figura 1).  
+
+![Figura 1: puntos de medicion de reflectancia](./Images/esquema-medicion-espectros-chingolos-.png)  
+
+Ademas medimos la espalda en el centro arriba (4) y el costado del collar rufo (medicion 5, del lado que mejor se veia porque a veces queda escondido en el cuello de la piel)
+
+
+```{r reflectancia}
+library(pavo)
+
+
+
+chingos <- getspec("/Users/Ana/Desktop/Chingolos/Prueba espectrofotometria", ext = "txt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+
+#visualizar los espectros, como para ver que sean mas o menos lo que esperamos
+plot(chingos)
+
+#promediar los espectros que son replicas de un mismo individuo. En este caso tomamos tres puntos por bicho (5 veces cada punto), asi que by = 5. Ojo aca hay que chequear que no falte ninguno y que queden correlativos en la carpeta para que los promedios de a 3 correspondan al mismo individuo y la misma medicion. Podriamos promediar los 15, pero lo hago por medicion para que podamos ver si queremos comparar algun punto de medicion en particular, o el color de la cabeza en general, o ambos.
+
+chingos_bymeasurement <- aggspec(chingos, by = 5, FUN = mean)
+
+
+#eliminar valores negativos (si hay)
+chingos_bymeasurement_sn <-procspec(chingos_bymeasurement, fixneg='zero')
+
+#ahora hacemos subgrupos de espectros en base a los parches, tenemos que tener 4 espectros para cada uno de los 5 parches (74042 y 74051 son nichos "australis-like" y 74010 y 74019 son "elresto-like")
+
+
+chingos_p1 <- subset(chingos_bymeasurement_sn, "_1_")
+chingos_p2 <- subset(chingos_bymeasurement_sn, "_2_")
+chingos_p3 <- subset(chingos_bymeasurement_sn, "_3_")
+chingos_p4 <- subset(chingos_bymeasurement_sn, "_4_")
+chingos_p5 <- subset(chingos_bymeasurement_sn, "_5_")
+
+plot(chingos_p1)
+plot(chingos_p2)
+plot(chingos_p3)
+plot(chingos_p4)
+plot(chingos_p5)
+```
+El parche 5 (collar rufo) muestra que todos los bichos son similares... no separaria por subespecie. El resto muestrab variacion pero habria que ver si los agrupa por subespecie o son diferencias interindividuales...
+
+```{r}
+explorespec(chingos_p1)
+
+#el ploteo por individuo muestra que los dos que tienen reflectancia mas baja son uno de cada uno de los morfos... en principio este parche no diferenciaria
+
+explorespec(chingos_p2)
+
+#en este caso 10 y 19 tienen valores menores (<10% reflectacia), consistentes con sus franjas negras mas pronunciadas, mientras que 42 y 51 estan alrededor de 10%. 
+
+explorespec(chingos_p3)
+
+#lo mismo pasa en 3, consistente con 2 y lo esperado
+
+explorespec(chingos_p4)
+
+#en la espalda parece que uno de los chingolos "normales" tiene reflectancia mas alta que el resto, pero no parecen agrupados por subespecie.
+```
+Voy ahora a agrupar por "subespecie" y graficar con media y desvio para ver si en estas dos muestras por grupo se aprecian diferencias significativas, aunque obviamente no es lo mas correcto ni mucho menos. Tengo que renonbrar los espectros para poder agruparlos... Bajar CSV, modificar nombres y volver a cargar.
+
+```{r}
+
+```
+
