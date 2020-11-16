@@ -19,7 +19,7 @@ Con Pablito hicimos una prueba piloto midiendo espectros de reflectancia en tres
 
 ![Puntos de medicion de reflectancia](./Images/esquema-medicion-espectros-chingolos-.png)  
 
-Ademas medimos la espalda en el centro arriba (4) y el costado del collar rufo (medicion 5, del lado que mejor se veia porque a veces queda escondido en el cuello de la piel)
+Ademas medimos el pecho (4) y el costado del collar rufo (medicion 5, del lado que mejor se veia porque a veces queda escondido en el cuello de la piel)
 
 
 ```{r reflectancia}
@@ -87,7 +87,7 @@ explorespec(chingos_p4)
 #en la espalda parece que uno de los chingolos "normales" tiene reflectancia mas
 #alta que el resto, pero no parecen agrupados por subespecie.
 ```
-Voy ahora a agrupar por "subespecie" y graficar con media y desvio para ver si en estas dos muestras por grupo se aprecian diferencias significativas, aunque obviamente no es lo mas correcto ni mucho menos. Tengo que renonbrar los espectros para poder agruparlos... Bajar CSV, modificar nombres y volver a cargar.
+Voy ahora a agrupar por "subespecie" y graficar con media y error para ver si en estas dos muestras por grupo se aprecian diferencias significativas, aunque obviamente no es lo mas correcto ni mucho menos. Tengo que renonbrar los espectros para poder agruparlos... Bajar CSV, modificar nombres y volver a cargar.
 
 ```{r}
 #renombrar las columnas para que incluyan el nombre de la "subespecie" 
