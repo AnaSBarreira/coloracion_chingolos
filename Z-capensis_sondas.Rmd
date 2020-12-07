@@ -1,0 +1,94 @@
+---
+title: "Comparacion sondas espectrofotometro"
+author: "Ana Barreira"
+date: "11/18/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(pavo)
+```
+
+***Zonotrichia capensis***  
+<br>  
+<br>  
+**Espectros promedio por parche para cada una de las cinco mediciones hechas**  
+  
+    
+*a)* mediciones hechas con sonda metalica  
+*b)* mediciones hechas con sonda plastica (azul)  
+
+
+**Parches**:  
+
+1: centro cabeza   
+2: banda cabeza derecha   
+3: banca cabeza izquierda      
+4: pecho     
+5: collar   
+
+  
+```{r espectros}
+
+setwd<-("/Users/Ana/Desktop/Coloracion_chingolos")
+
+zcap <- getspec("/Users/Ana/Desktop/Coloracion_chingolos/Espectros", ext = "txt",
+                     decimal = ",", subdir = TRUE, subdir.names = FALSE)
+
+zcap_mean <- aggspec(zcap, by=5)
+zcap_sn <- procspec(zcap_mean, fixneg = "zero")
+
+
+zcap_1 <- subset(zcap_sn, "_1")
+zcap_2 <- subset(zcap_sn, "_2")
+zcap_3 <- subset(zcap_sn, "_3")
+zcap_4 <- subset(zcap_sn, "_4")
+zcap_5 <- subset(zcap_sn, "_5")
+
+
+
+
+zcap_1_sonda <-gsub('[^ab]', "", colnames(zcap_1))[-1]
+table(zcap_1_sonda)
+aggplot(zcap_1,zcap_1_sonda, FUN.error=function(x)sd(x)/sqrt(length(x)),
+        legend=TRUE, ylim=c(0,20), main = "cabeza gris")
+
+
+
+
+
+```
+
+
+
+```{r}
+
+zcap_2_sonda <-gsub('[^ab]', "", colnames(zcap_2))[-1]
+table(zcap_2_sonda)
+aggplot(zcap_2,zcap_2_sonda, FUN.error=function(x)sd(x)/sqrt(length(x)),
+        legend=TRUE, ylim=c(0,20), main = "cabeza banda der")
+
+
+zcap_3_sonda <-gsub('[^ab]', "", colnames(zcap_3))[-1]
+table(zcap_3_sonda)
+aggplot(zcap_3,zcap_3_sonda, FUN.error=function(x)sd(x)/sqrt(length(x)),
+        legend=TRUE, ylim=c(0,20), main = "cabeza banda izq")
+
+
+zcap_4_sonda <-gsub('[^ab]', "", colnames(zcap_4))[-1]
+table(zcap_4_sonda)
+aggplot(zcap_4,zcap_4_sonda, FUN.error=function(x)sd(x)/sqrt(length(x)),
+        legend=TRUE, ylim=c(0,30), main = "pecho")
+
+
+zcap_5_sonda <-gsub('[^ab]', "", colnames(zcap_5))[-1]
+table(zcap_5_sonda)
+aggplot(zcap_5,zcap_5_sonda, FUN.error=function(x)sd(x)/sqrt(length(x)),
+        legend=TRUE, ylim=c(0,30), main = "collar")
+
+
+```
+Ahi van las comparaciones de sondas. No estan separados autralis de otros aca. En general creo que hay bastante similitud aunque los espectros con la sonda plastica suelen tener mayor intensidad. POr lo que vi en los espectros el tiempo de integracion es diferente...aunque no se cuando afectaria esto. 
+
+Creo que hay bastante superposicion y siempre que las medidas definitivas se hagan con la sonda plastica no deberia haber problema. Sobre todo considerando que no hay perspectivas de tener otra metalica en el corto plazo. 
